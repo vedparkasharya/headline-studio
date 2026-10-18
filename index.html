@@ -89,7 +89,7 @@ function draw(){
  ctx.textAlign='center';ctx.textBaseline='middle';
  function measure(size){ctx.font='900 '+size+'px "Noto Sans Devanagari", Inter, sans-serif';return lines.map(s=>ctx.measureText(s).width)}
  let widths=measure(font);while(Math.max.apply(null,widths)>boxMax-2*padX&&font>24){font--;widths=measure(font)}
- const lineH=Math.round(font*(isRedGlow?1.38:1.45)),boxH=lineH+padY*2,total=lines.length*boxH+(lines.length-1)*gap;
+ const lineH=Math.round(font*(isRedGlow?1.38:1.45)),boxH=Math.max(72,lineH+padY*2),total=lines.length*boxH+(lines.length-1)*gap;
  let startY;
  const pos=$('position').value;
  if(pos==='top')startY=90;else if(pos==='center')startY=(1350-total)/2;else if(pos==='lower')startY=790-total;else startY=1265-total;
@@ -119,10 +119,8 @@ function draw(){
   else if(typ==='glass')fill='rgba(20,24,42,'+alpha*.58+')';
   else if(typ==='tricolor'){const gr=ctx.createLinearGradient(x,y,x+w,y+boxH);gr.addColorStop(0,'rgba(255,153,51,'+alpha+')');gr.addColorStop(.5,'rgba(255,255,255,'+alpha+')');gr.addColorStop(1,'rgba(19,136,8,'+alpha+')');fill=gr}
   else {const gr=ctx.createLinearGradient(x,y,x+w,y+boxH);gr.addColorStop(0,t.a);gr.addColorStop(1,t.b);fill=gr}
-  if(!noBlock){
-    ctx.fillStyle=fill;
-    roundedRect(ctx,x,y,w,boxH,typ==='breaking'||typ==='flash'||typ==='paper'?2:typ==='glass'?20:typ==='white'||typ==='clean'?0:10);ctx.fill();
-  }
+  ctx.fillStyle=fill;
+  roundedRect(ctx,x,y,w,boxH,typ==='breaking'||typ==='flash'||typ==='paper'?2:typ==='glass'?20:typ==='white'||typ==='clean'?0:10);ctx.fill();
   if(typ==='paper'){ctx.strokeStyle='#8d6e45';ctx.lineWidth=4;ctx.strokeRect(x+3,y+3,w-6,boxH-6);ctx.setLineDash([7,6]);ctx.lineWidth=1;ctx.strokeRect(x+12,y+12,w-24,boxH-24);ctx.setLineDash([])}
   if(typ==='white'||typ==='clean'){ctx.fillStyle=typ==='white'?'#111827':'#ffffff';ctx.fillRect(x,y,9,boxH);ctx.fillStyle=t.a;ctx.fillRect(x,y+boxH-7,w,7)}
   if(typ==='slate'||typ==='gray'){ctx.fillStyle=t.a;ctx.fillRect(x,y,12,boxH);ctx.fillStyle='rgba(255,255,255,.18)';ctx.fillRect(x+12,y,w-12,2)}
