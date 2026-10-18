@@ -92,7 +92,7 @@ function draw(){
  const lineH=Math.round(font*(isRedGlow?1.38:1.45)),boxH=Math.max(72,lineH+padY*2),total=lines.length*boxH+(lines.length-1)*gap;
  let startY;
  const pos=$('position').value;
- if(pos==='top')startY=90;else if(pos==='center')startY=(1350-total)/2;else if(pos==='lower')startY=790-total;else startY=1265-total;
+ if(pos==='top')startY=90;else if(pos==='center')startY=(1350-total)/2;else if(pos==='lower')startY=790-total;else startY=1280-total;
  startY=clamp(startY,30,1350-total-25);
  lines.forEach((line,i)=>{
   const y=startY+i*(boxH+gap),w=970,x=(1080-w)/2;
