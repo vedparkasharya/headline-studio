@@ -38,7 +38,7 @@ canvas{display:block;width:100%;height:auto;aspect-ratio:4/5;object-fit:contain;
 (function(){
 const $=id=>document.getElementById(id);
 const themes=[
-{name:'Red Editorial',type:'red',a:'#e51b3e',b:'#8e1027'},
+{name:'Red Editorial Glow',type:'redglow',a:'#ff1f35',b:'#71000b'},
 {name:'RGB Glow',type:'rgb',a:'#00e5ff',b:'#ff2d95'},
 {name:'Breaking News',type:'breaking',a:'#c8102e',b:'#790b20'},
 {name:'Neon Cyan',type:'neon',a:'#00d9ff',b:'#0066ff'},
@@ -96,6 +96,17 @@ function draw(){
   const hi=$('highlight').value,highlight=(hi==='both'||(hi==='first'&&i===0)||(hi==='second'&&i===1));
   ctx.save();
   const typ=t.type;
+  if(typ==='redglow'){
+    const glow=ctx.createRadialGradient(540,y+boxH/2,Math.min(w*.12,35),540,y+boxH/2,w*.78);
+    glow.addColorStop(0,'rgba(255,18,35,.96)');glow.addColorStop(.46,'rgba(165,0,17,.94)');glow.addColorStop(1,'rgba(35,0,4,.98)');
+    ctx.shadowColor='#ff1028';ctx.shadowBlur=34;
+    ctx.fillStyle=glow;roundedRect(ctx,x,y,w,boxH,20);ctx.fill();
+    ctx.shadowBlur=0;ctx.strokeStyle='rgba(255,35,48,.7)';ctx.lineWidth=1;roundedRect(ctx,x,y,w,boxH,20);ctx.stroke();
+    ctx.textAlign=$('alignment').value;ctx.font='900 '+font+'px "Noto Sans Devanagari", Inter, sans-serif';ctx.textBaseline='middle';
+    let tx=540;if($('alignment').value==='left')tx=x+padX;if($('alignment').value==='right')tx=x+w-padX;
+    ctx.shadowColor='#ff3344';ctx.shadowBlur=10;ctx.fillStyle='#fff';ctx.fillText(line,tx,y+boxH/2,w-2*padX);
+    ctx.restore();return;
+  }
   const outlined=['neon','ice','haze','rgb'].includes(typ);
   const minimal=['white','clean','paper','slate','gray'].includes(typ);
   const strip=['breaking','flash','hot','orange','amber'].includes(typ);
