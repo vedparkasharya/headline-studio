@@ -1,0 +1,10 @@
+{
+  "name": "Headline Studio AI",
+  "short_name": "Headline Studio",
+  "description": "Create researched news captions and transparent headline PNG overlays.",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#0b0b0f",
+  "theme_color": "#101014",
+  "icons": []
+}
