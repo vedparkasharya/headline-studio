@@ -29,9 +29,9 @@ input,textarea,select,button{font:inherit}input,textarea,select{width:100%;backg
 <label class="label" for="second">Second line (optional)</label><input id="second" maxlength="100" placeholder="दूसरी लाइन यहाँ लिखें…" value="पूरी खबर पढ़ें">
 <div class="row"><div><label class="label" for="size">Text size</label><select id="size"><option value="36">Compact</option><option value="42" selected>Standard</option><option value="48">Large</option><option value="54">Extra large</option><option value="60">Maximum</option></select></div><div><label class="label" for="position">Position</label><select id="position"><option value="bottom">Bottom</option><option value="lower">Lower middle</option><option value="center">Center</option><option value="top">Top</option></select></div></div>
 <div class="row"><div><label class="label" for="alignment">Text alignment</label><select id="alignment"><option value="center">Center</option><option value="left">Left</option><option value="right">Right</option></select></div><div><label class="label" for="highlight">Highlight line</label><select id="highlight"><option value="first">Line 1</option><option value="second">Line 2</option><option value="both">Both lines</option><option value="none">No highlight</option></select></div></div><label class="label" for="frame">Frame / border style</label><select id="frame"><option value="none">No frame</option><option value="editorial">Editorial double frame</option><option value="corners">News corner marks</option><option value="rgb">RGB neon frame</option><option value="gold">Gold premium frame</option><option value="film">Film strip frame</option><option value="tricolor">India tricolour frame</option></select>
-<label class="label">Choose from 32 styles</label><div class="styles" id="styles"></div>
+<label class="label">Choose from 33 styles</label><div class="styles" id="styles"></div>
 <div class="actions"><button id="reset">Reset</button></div>
-<p class="muted hint">Har style mein fixed full-width rectangle rahega; headline neeche position hogi. Preview ke baad PNG download karo.</p>
+<p class="muted hint">Most styles use a fixed full-width rectangle. “Red Text · Black Gradient” removes the boxes and keeps red text over a bottom black gradient.</p>
 </section>
 <section class="card"><div class="sectionTag">02 / YOUR CANVAS</div><h2>Live preview</h2><p class="muted">Neeche final design dikhega jo PNG mein save hoga.</p><div class="previewWrap"><canvas id="canvas" width="1080" height="1350" aria-label="Transparent PNG preview"></canvas></div><div class="actions"><button id="previewBtn" type="button">◉ Preview design</button><button id="download" class="primary">↓ Download PNG</button></div><div class="actions"><button id="copyImage" type="button">Copy PNG</button></div><div class="row" style="margin-top:12px"><div><label class="label" for="opacity">Panel opacity</label><input id="opacity" type="range" min="35" max="100" value="96"></div><div><label class="label" for="gradient">Bottom gradient</label><select id="gradient"><option value="yes" selected>On</option><option value="no">Off</option></select></div></div><p class="muted">Works in your browser. No OpenAI, no paid API, no account required. Internet is only needed to load the Hindi font the first time.</p><div id="status" class="muted" role="status">Ready — choose a style or edit your headline.</div><hr class="divider"><div class="sectionTag">03 / READY TO POST</div><h2>Caption workshop</h2><p class="muted">Apni research ke verified facts yahan paste karo. App ek ready-to-edit caption template banayega.</p><label class="label" for="facts">Research / verified facts</label><textarea id="facts" placeholder="Research ke points, date, place aur important details yahan paste karo…"></textarea><div class="row"><div><label class="label" for="tone">Caption tone</label><select id="tone"><option value="news">Professional news</option><option value="viral">Engaging / shareable</option><option value="neutral">Neutral & factual</option><option value="short">Short caption</option></select></div><div><label class="label" for="platform">Platform</label><select id="platform"><option>Instagram</option><option>Facebook</option><option>YouTube Shorts</option><option>WhatsApp</option></select></div></div><button id="makeCaption" class="primary" style="width:100%;margin-top:10px">✦ Create caption from my research</button><label class="label" for="caption">Caption (editable)</label><textarea id="caption" placeholder="Caption yahan banega…"></textarea><div class="row"><button id="copyCaption">Copy caption</button><button id="shareCaption">Share caption</button></div><p class="muted">Ye template-based caption hai, AI-generated nahi. Publish karne se pehle facts verify karna.</p></section>
 </div>
@@ -71,7 +71,8 @@ const themes=[
 {name:'Purple Haze',type:'haze',a:'#a855f7',b:'#db2777'},
 {name:'Matrix Green',type:'matrix',a:'#22c55e',b:'#14532d'},
 {name:'Ocean Wave',type:'ocean',a:'#06b6d4',b:'#1d4ed8'},
-{name:'Clean White',type:'clean',a:'#ffffff',b:'#e5e7eb'}
+{name:'Clean White',type:'clean',a:'#ffffff',b:'#e5e7eb'},
+{name:'Red Text · Black Gradient',type:'redtext',a:'#ff243f',b:'#b80020'}
 ];
 let chosen=0;
 $('styles').innerHTML=themes.map((t,i)=>'<button type="button" class="style '+(i===0?'active':'')+'" data-i="'+i+'"><div class="swatch" style="background:linear-gradient(90deg,'+t.a+','+t.b+')"></div>'+String(i+1).padStart(2,'0')+' · '+t.name+'</button>').join('');
@@ -107,6 +108,26 @@ function draw(){
     ctx.textAlign='center';ctx.font='900 '+font+'px "Noto Sans Devanagari", Inter, sans-serif';ctx.textBaseline='middle';
     ctx.shadowColor='rgba(255,255,255,.16)';ctx.shadowBlur=3;ctx.fillStyle='#fff';ctx.fillText(line,540,y+boxH/2,w-2*padX);
     ctx.restore();return;
+  }
+  if(typ==='redtext'){
+    const redFont=Math.min(font,54);
+    ctx.textAlign=$('alignment').value;ctx.textBaseline='middle';
+    const tx=$('alignment').value==='left'?72:$('alignment').value==='right'?1008:540;
+    ctx.font='900 '+redFont+'px "Noto Sans Devanagari", Inter, sans-serif';
+    const lineHeight=redFont*1.35;
+    const blockHeight=lines.length*lineHeight+(lines.length-1)*14;
+    let baseY=1288-blockHeight/2;
+    if($('position').value==='top')baseY=110+blockHeight/2;
+    else if($('position').value==='center')baseY=675;
+    else if($('position').value==='lower')baseY=980;
+    lines.forEach((line,i)=>{
+      const yy=baseY-blockHeight/2+lineHeight/2+i*(lineHeight+14);
+      ctx.save();ctx.shadowColor='rgba(255,20,45,.82)';ctx.shadowBlur=22;
+      ctx.fillStyle='#ff263f';ctx.fillText(line,tx,yy,930);ctx.restore();
+    });
+    ctx.textAlign='center';ctx.shadowBlur=0;
+    $('status').textContent='Red text + bottom black gradient preview ready.';
+    return;
   }
   const outlined=['neon','ice','haze','rgb'].includes(typ);
   const minimal=['white','clean','paper','slate','gray'].includes(typ);
