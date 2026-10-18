@@ -1,29 +1,129 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#101014"><link rel="manifest" href="./manifest.webmanifest"><title>Headline Studio AI</title>
+<html lang="hi">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#0b0b12"><meta name="description" content="Create beautiful transparent Hindi and English headline PNG overlays for free.">
+<link rel="manifest" href="./manifest.webmanifest"><title>Headline Studio — Free PNG Maker</title>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;600;700;800;900&family=Inter:wght@400;600;700;800&display=swap');
-:root{color-scheme:dark;--bg:#0b0b10;--card:#15151e;--line:#2c2c3a;--muted:#a5a5b8;--accent:#ff304f}*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at top,#202033,var(--bg) 55%);color:#f7f7fb;font-family:Inter,'Noto Sans Devanagari',sans-serif}main{max-width:1180px;margin:auto;padding:24px}.top{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}.brand{font-size:26px;font-weight:900;letter-spacing:-.7px}.brand span{color:#ff4565}.sub{color:var(--muted);font-size:13px;margin-top:5px}.pill{border:1px solid #454557;border-radius:99px;padding:8px 12px;color:#cfcfe0;font-size:12px}.layout{display:grid;grid-template-columns:minmax(0,1fr) minmax(300px,.9fr);gap:18px;margin-top:24px}.card{background:#14141deF;border:1px solid var(--line);border-radius:18px;padding:18px;min-width:0}.card h2{font-size:16px;margin:0 0 14px}.muted{color:var(--muted);font-size:12px;line-height:1.5}.row{display:flex;gap:10px;flex-wrap:wrap}.row>*{flex:1;min-width:120px}button,select,input,textarea{font:inherit}button{border:1px solid #414152;background:#242432;color:white;border-radius:11px;padding:11px 13px;cursor:pointer;font-weight:700}button.primary{background:linear-gradient(135deg,#ff304f,#a329e7);border:0}button:disabled{opacity:.55;cursor:wait}input,select,textarea{width:100%;background:#0e0e15;border:1px solid #373746;color:white;border-radius:10px;padding:11px;margin:6px 0 12px}textarea{min-height:85px;resize:vertical}.label{font-size:12px;color:#c5c5d5;font-weight:700;display:block;margin-top:10px}.preview{width:100%;aspect-ratio:4/5;background:#09090d;border:1px dashed #49495b;border-radius:12px;display:flex;align-items:center;justify-content:center;overflow:hidden;color:#999;text-align:center}.preview img{width:100%;height:100%;object-fit:contain}.styles{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}.style{font-size:11px;padding:10px 6px;min-width:0}.style.active{border-color:#ff4565;background:#4a1d2b}.status{font-size:12px;color:#a6f3c4;min-height:18px;margin:10px 0}.output{background:#101018;border-radius:10px;padding:10px;white-space:pre-wrap;word-break:break-word;font-size:13px;min-height:48px}.sources a{color:#a9c8ff;display:block;margin:8px 0;overflow-wrap:anywhere}.foot{margin-top:18px;color:#8e8ea3;font-size:11px;text-align:center}@media(max-width:800px){main{padding:14px}.layout{grid-template-columns:1fr}.brand{font-size:23px}.styles{grid-template-columns:repeat(2,minmax(0,1fr))}}
-</style></head><body><main>
-<header class="top"><div><div class="brand">HEADLINE <span>STUDIO AI</span></div><div class="sub">Screenshot → researched copy → transparent editorial PNG</div></div><div class="pill">Hindi + English · 1080 × 1350</div></header>
-<div class="layout"><section class="card"><h2>01 / Upload & analyse</h2><label class="label">Screenshot / news post</label><input id="file" type="file" accept="image/*"><div class="preview" id="preview">Upload a screenshot to preview it here</div><div class="row" style="margin-top:12px"><button id="analyse" class="primary">✦ AI Analyse Screenshot</button><button id="research">⌕ Research this story</button></div><div id="status" class="status"></div><p class="muted">AI analysis runs when you press Analyse. Web research runs only when you press Research. Keep the API key on the server, never in this page.</p>
-<label class="label">Headline line 1</label><input id="line1" value="बड़ी खबर, नई जानकारी"><label class="label">Headline line 2</label><input id="line2" value="पूरी खबर पढ़ें"><label class="label">Language</label><select id="language"><option value="Hindi">Hindi</option><option value="English">English</option><option value="Both">Hindi + English</option></select>
-<label class="label">Choose a style (20 styles)</label><div class="styles" id="styles"></div>
-<div class="row"><div><label class="label">Text size</label><select id="size"><option value="36">Compact</option><option value="42">Standard</option><option value="48">Large</option><option value="54">Extra large</option></select></div><div><label class="label">Panel position</label><select id="position"><option value="bottom">Bottom</option><option value="lower">Lower-middle</option></select></div></div><button id="png" class="primary" style="width:100%;margin-top:8px">↓ Generate transparent PNG</button><canvas id="canvas" width="1080" height="1350" style="display:none"></canvas><a id="download" style="display:none;color:#a9c8ff;margin-top:12px" download="headline-overlay.png">Download PNG</a></section>
-<section class="card"><h2>02 / AI-generated copy</h2><label class="label">Caption</label><textarea id="caption" placeholder="AI caption will appear here…"></textarea><button data-copy="caption">Copy caption</button><label class="label">Description</label><textarea id="description" placeholder="AI description will appear here…"></textarea><button data-copy="description">Copy description</button><label class="label">Hashtags</label><textarea id="hashtags" placeholder="#news #India"></textarea><button data-copy="hashtags">Copy hashtags</button><h2 style="margin-top:22px">Research sources</h2><div id="sources" class="sources muted">Press “Research this story” to find source links.</div><label class="label">Research notes / source URLs</label><textarea id="notes" placeholder="Verified facts and links will appear here…"></textarea><button data-copy="notes">Copy research notes</button><p class="muted">Verify key facts before publishing. Search results are leads, not a guarantee that every claim is true.</p></section></div><div class="foot">Headline Studio AI · Never publish unverified claims · API key stays server-side</div></main>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600;700;800;900&display=swap');
+:root{color-scheme:dark;--bg:#0a0a10;--panel:#15151f;--line:#303040;--muted:#a4a4b8;--accent:#ff3658}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 50% -10%,#29203b 0%,var(--bg) 55%);color:#f8f8fb;font-family:Inter,'Noto Sans Devanagari',sans-serif}
+main{max-width:1280px;margin:auto;padding:22px}.top{display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap}.brand{font-weight:900;font-size:25px;letter-spacing:-.8px}.brand span{color:#ff4264}.sub{color:var(--muted);font-size:13px;margin-top:5px}.badge{border:1px solid #3a3a4b;border-radius:999px;padding:8px 12px;font-size:12px;color:#cfcfe0}
+.layout{display:grid;grid-template-columns:minmax(0,1.08fr) minmax(320px,.92fr);gap:18px;margin-top:22px}.card{min-width:0;background:#15151fee;border:1px solid var(--line);border-radius:18px;padding:18px}.card h2{font-size:16px;margin:0 0 12px}.muted{color:var(--muted);font-size:12px;line-height:1.55}.label{display:block;font-size:12px;font-weight:700;color:#d1d1df;margin:14px 0 6px}
+input,textarea,select,button{font:inherit}input,textarea,select{width:100%;background:#0d0d15;border:1px solid #383849;color:#fff;border-radius:10px;padding:12px}textarea{min-height:84px;resize:vertical}.row{display:flex;gap:10px}.row>*{flex:1;min-width:0}button{border:1px solid #414153;background:#242432;color:#fff;border-radius:10px;padding:11px 12px;cursor:pointer;font-weight:750}button.primary{border:0;background:linear-gradient(120deg,#ff3154,#9228e8)}button:active{transform:translateY(1px)}
+.styles{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-top:8px}.style{min-height:54px;font-size:11px;line-height:1.25;padding:8px 5px;border-color:#393949}.style .swatch{height:7px;border-radius:99px;margin-bottom:7px}.style.active{border-color:#fff;box-shadow:0 0 0 1px #fff3;background:#353548}
+.previewWrap{padding:12px;border-radius:14px;border:1px solid #373746;background-color:#11111a;background-image:linear-gradient(45deg,#20202a 25%,transparent 25%),linear-gradient(-45deg,#20202a 25%,transparent 25%),linear-gradient(45deg,transparent 75%,#20202a 75%),linear-gradient(-45deg,transparent 75%,#20202a 75%);background-size:20px 20px;background-position:0 0,0 10px,10px -10px,-10px 0;overflow:hidden}
+canvas{display:block;width:100%;height:auto;aspect-ratio:4/5;object-fit:contain;border-radius:8px}.actions{display:flex;gap:9px;margin-top:12px}.actions button{flex:1}.hint{margin-top:9px}.footer{text-align:center;color:#85859a;font-size:11px;margin:18px 0 4px}
+@media(max-width:850px){main{padding:12px}.layout{grid-template-columns:1fr}.brand{font-size:22px}.styles{grid-template-columns:repeat(2,minmax(0,1fr))}.card{padding:14px}}
+</style>
+</head>
+<body><main>
+<header class="top"><div><div class="brand">HEADLINE <span>STUDIO</span></div><div class="sub">Type headline → choose a style → download transparent PNG</div></div><div class="badge">FREE · No API key · 1080 × 1350</div></header>
+<div class="layout">
+<section class="card">
+<h2>01 / Apna headline likho</h2>
+<p class="muted">Bas text type karo. Preview apne aap update hoga. Hindi aur English dono supported hain.</p>
+<label class="label" for="headline">Headline</label><textarea id="headline" maxlength="180" placeholder="यहाँ अपनी न्यूज़ हेडलाइन लिखें…">बड़ी खबर! नई जानकारी सामने आई</textarea>
+<label class="label" for="second">Second line (optional)</label><input id="second" maxlength="100" placeholder="दूसरी लाइन यहाँ लिखें…" value="पूरी खबर पढ़ें">
+<div class="row"><div><label class="label" for="size">Text size</label><select id="size"><option value="36">Compact</option><option value="42" selected>Standard</option><option value="48">Large</option><option value="54">Extra large</option><option value="60">Maximum</option></select></div><div><label class="label" for="position">Position</label><select id="position"><option value="bottom">Bottom</option><option value="lower">Lower middle</option><option value="center">Center</option><option value="top">Top</option></select></div></div>
+<div class="row"><div><label class="label" for="alignment">Text alignment</label><select id="alignment"><option value="center">Center</option><option value="left">Left</option><option value="right">Right</option></select></div><div><label class="label" for="highlight">Highlight line</label><select id="highlight"><option value="first">Line 1</option><option value="second">Line 2</option><option value="both">Both lines</option><option value="none">No highlight</option></select></div></div>
+<label class="label">Choose from 32 styles</label><div class="styles" id="styles"></div>
+<div class="actions"><button id="download" class="primary">↓ Download transparent PNG</button><button id="reset">Reset</button></div>
+<p class="muted hint">PNG transparent rahega. Checkerboard sirf preview mein transparency dikhane ke liye hai; download mein nahi aayega.</p>
+</section>
+<section class="card"><h2>02 / Live PNG preview</h2><div class="previewWrap"><canvas id="canvas" width="1080" height="1350" aria-label="Transparent PNG preview"></canvas></div><div class="row" style="margin-top:12px"><div><label class="label" for="opacity">Panel opacity</label><input id="opacity" type="range" min="35" max="100" value="96"></div><div><label class="label" for="gradient">Bottom gradient</label><select id="gradient"><option value="yes" selected>On</option><option value="no">Off</option></select></div></div><p class="muted">Works in your browser. No OpenAI, no paid API, no account required. Internet is only needed to load the Hindi font the first time.</p><div id="status" class="muted" role="status">Ready — choose a style or edit your headline.</div></section>
+</div>
+<div class="footer">Headline Studio · Made for Reels, Shorts and news overlays</div></main>
 <script>
-const $=id=>document.getElementById(id);let imageData='',selected=0;
-const styles=[
-['Red Editorial','#e51b3e','red'],['RGB Glow','#7c3aed','rgb'],['Breaking News','#c8102e','red'],['Neon Cyan','#00d9ff','rgb'],['Electric Violet','#9d4edd','rgb'],['Amber Alert','#ff9f1c','amber'],['Midnight Blue','#2457d6','blue'],['Emerald Flash','#00a878','green'],['Magenta Pulse','#ed2b9d','rgb'],['White Minimal','#f1f1f4','white'],['Black Luxe','#08080b','black'],['Orange Impact','#ff5a1f','amber'],['Royal Purple','#6d28d9','rgb'],['Crimson Glass','#b51232','red'],['Ice Blue','#70d6ff','blue'],['Gold Premium','#bd8a24','amber'],['Lime Signal','#a3e635','green'],['Cyber Pink','#ff2e88','rgb'],['Slate Editorial','#343443','black'],['Red + RGB','#e51b3e','rgb']
+(function(){
+const $=id=>document.getElementById(id);
+const themes=[
+{name:'Red Editorial',type:'red',a:'#e51b3e',b:'#8e1027'},
+{name:'RGB Glow',type:'rgb',a:'#00e5ff',b:'#ff2d95'},
+{name:'Breaking News',type:'breaking',a:'#c8102e',b:'#790b20'},
+{name:'Neon Cyan',type:'neon',a:'#00d9ff',b:'#0066ff'},
+{name:'Electric Violet',type:'violet',a:'#9d4edd',b:'#4c1d95'},
+{name:'Amber Alert',type:'amber',a:'#ff9f1c',b:'#9a4e00'},
+{name:'Midnight Blue',type:'blue',a:'#2457d6',b:'#101e5b'},
+{name:'Emerald Flash',type:'green',a:'#00a878',b:'#064e3b'},
+{name:'Magenta Pulse',type:'magenta',a:'#ed2b9d',b:'#831843'},
+{name:'White Minimal',type:'white',a:'#f1f1f4',b:'#c8c8d2'},
+{name:'Black Luxe',type:'black',a:'#111118',b:'#030305'},
+{name:'Orange Impact',type:'orange',a:'#ff5a1f',b:'#a52d0c'},
+{name:'Royal Purple',type:'purple',a:'#6d28d9',b:'#3b0764'},
+{name:'Crimson Glass',type:'glass',a:'#b51232',b:'#380712'},
+{name:'Ice Blue',type:'ice',a:'#70d6ff',b:'#1d4ed8'},
+{name:'Gold Premium',type:'gold',a:'#bd8a24',b:'#62410c'},
+{name:'Lime Signal',type:'lime',a:'#a3e635',b:'#3f6212'},
+{name:'Cyber Pink',type:'pink',a:'#ff2e88',b:'#831843'},
+{name:'Slate Editorial',type:'slate',a:'#343443',b:'#11111a'},
+{name:'Red + RGB',type:'mix',a:'#e51b3e',b:'#00e5ff'},
+{name:'News Flash',type:'flash',a:'#f8fafc',b:'#dc2626'},
+{name:'India Tricolour',type:'tricolor',a:'#ff9933',b:'#138808'},
+{name:'Deep Teal',type:'teal',a:'#0f766e',b:'#042f2e'},
+{name:'Laser Yellow',type:'yellow',a:'#facc15',b:'#854d0e'},
+{name:'Royal Blue',type:'royal',a:'#2563eb',b:'#172554'},
+{name:'Vintage Paper',type:'paper',a:'#f3e7cf',b:'#8d6e45'},
+{name:'Newsroom Gray',type:'gray',a:'#64748b',b:'#1e293b'},
+{name:'Hot Red',type:'hot',a:'#ff1744',b:'#ff6d00'},
+{name:'Purple Haze',type:'haze',a:'#a855f7',b:'#db2777'},
+{name:'Matrix Green',type:'matrix',a:'#22c55e',b:'#14532d'},
+{name:'Ocean Wave',type:'ocean',a:'#06b6d4',b:'#1d4ed8'},
+{name:'Clean White',type:'clean',a:'#ffffff',b:'#e5e7eb'}
 ];
-$('styles').innerHTML=styles.map((s,i)=>'<button class="style '+(i===0?'active':'')+'" data-style="'+i+'">'+String(i+1).padStart(2,'0')+' · '+s[0]+'</button>').join('');
-$('styles').addEventListener('click',e=>{const b=e.target.closest('[data-style]');if(!b)return;selected=+b.dataset.style;document.querySelectorAll('.style').forEach(x=>x.classList.toggle('active',x===b))});
-$('file').addEventListener('change',()=>{const f=$('file').files[0];if(!f)return;const reader=new FileReader();reader.onload=()=>{imageData=reader.result;$('preview').innerHTML='<img alt="Uploaded screenshot" src="'+imageData+'">';setStatus('Screenshot ready. Press AI Analyse when you want.');};reader.readAsDataURL(f)});
-function setStatus(s){$('status').textContent=s}
-async function post(url,body){const r=await fetch(url,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});const data=await r.json().catch(()=>({error:'Server returned an invalid response'}));if(!r.ok)throw new Error(data.error||'Request failed');return data}
-$('analyse').onclick=async()=>{if(!imageData){setStatus('Please upload a screenshot first.');return}const b=$('analyse');b.disabled=true;setStatus('AI is reading the screenshot…');try{const d=await post('./api/analyze',{image:imageData,language:$('language').value});$('line1').value=d.headline1||'';$('line2').value=d.headline2||'';$('caption').value=d.caption||'';$('description').value=d.description||'';$('hashtags').value=(d.hashtags||[]).join(' ');$('notes').value=d.claims_to_verify||'';setStatus('AI analysis complete. Review all facts before posting.')}catch(e){setStatus(e.message)}finally{b.disabled=false}};
-$('research').onclick=async()=>{const b=$('research');b.disabled=true;setStatus('Searching the web for this story…');try{const d=await post('./api/research',{query:[$('line1').value,$('line2').value,$('notes').value].filter(Boolean).join(' '),language:$('language').value});$('notes').value=d.summary||d.text||'';$('sources').innerHTML=(d.sources||[]).map(s=>'<a target="_blank" rel="noopener noreferrer" href="'+esc(s.url)+'">'+esc(s.title||s.url)+'</a>').join('')||'No source links returned. Try a more specific headline.';setStatus('Research finished. Cross-check the sources before publishing.')}catch(e){setStatus(e.message)}finally{b.disabled=false}};
-function esc(s){return String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
-document.querySelectorAll('[data-copy]').forEach(b=>b.onclick=async()=>{const el=$(b.dataset.copy);try{await navigator.clipboard.writeText(el.value||el.textContent);setStatus('Copied to clipboard.')}catch(e){el.select?.();setStatus('Select and copy the text manually.')}});
-$('png').onclick=()=>{const c=$('canvas'),ctx=c.getContext('2d'),s=styles[selected],font=+$('size').value;ctx.clearRect(0,0,c.width,c.height);let lines=[$('line1').value.trim(),$('line2').value.trim()].filter(Boolean);if(!lines.length){setStatus('Enter a headline first.');return}ctx.font='800 '+font+'px "Noto Sans Devanagari", sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';let max=900;lines=lines.map(t=>{while(ctx.measureText(t).width>max&&ctx.font.includes('800 '+font+'px')){ctx.font='800 '+(parseInt(ctx.font.match(/800 (\d+)px/)[1])-1)+'px "Noto Sans Devanagari", sans-serif'}return t});const lineH=font*1.42,padX=34,padY=22,gap=12;const widths=lines.map(t=>Math.min(max,ctx.measureText(t).width));const panelW=Math.min(1000,Math.max(...widths)+padX*2);const panelH=lineH+padY*2;const bottom=$('position').value==='bottom'?1250:1060;const total=lines.length*panelH+(lines.length-1)*gap;const y0=bottom-total;const grad=ctx.createLinearGradient(0,800,0,1350);grad.addColorStop(0,'rgba(0,0,0,0)');grad.addColorStop(.5,'rgba(0,0,0,.5)');grad.addColorStop(1,'rgba(0,0,0,.94)');ctx.fillStyle=grad;ctx.fillRect(0,750,1080,600);lines.forEach((t,i)=>{const y=y0+i*(panelH+gap);ctx.save();ctx.shadowBlur=s[2]==='rgb'?24:0;ctx.shadowColor=s[1];ctx.fillStyle=s[2]==='white'?'rgba(12,12,16,.88)':s[2]==='black'?'rgba(8,8,12,.93)':s[2]==='rgb'?'rgba(10,10,20,.94)':s[1];ctx.fillRect((1080-panelW)/2,y,panelW,panelH);if(s[2]==='rgb'){const g=ctx.createLinearGradient((1080-panelW)/2,y,(1080+panelW)/2,y+panelH);g.addColorStop(0,'rgba(0,225,255,.18)');g.addColorStop(.5,'rgba(190,45,255,.18)');g.addColorStop(1,'rgba(255,35,120,.18)');ctx.fillStyle=g;ctx.fillRect((1080-panelW)/2,y,panelW,panelH)}if(s[0]==='Red + RGB'){ctx.fillStyle='rgba(255,35,70,.96)';ctx.fillRect((1080-panelW)/2,y,panelW,panelH);ctx.fillStyle='rgba(0,220,255,.16)';ctx.fillRect((1080-panelW)/2,y,panelW,panelH)}ctx.shadowBlur=s[2]==='rgb'?8:0;ctx.shadowColor=s[1];ctx.fillStyle=s[2]==='white'?'#111118':'#fff';ctx.font='800 '+font+'px "Noto Sans Devanagari",sans-serif';ctx.fillText(t,540,y+panelH/2, panelW-padX);ctx.restore()});c.toBlob(blob=>{const a=$('download');a.href=URL.createObjectURL(blob);a.style.display='inline-block';a.textContent='Download transparent PNG';a.click();setStatus('PNG generated at 1080 × 1350.');},'image/png')};
-if('serviceWorker'in navigator)window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));
+let chosen=0;
+$('styles').innerHTML=themes.map((t,i)=>'<button type="button" class="style '+(i===0?'active':'')+'" data-i="'+i+'"><div class="swatch" style="background:linear-gradient(90deg,'+t.a+','+t.b+')"></div>'+String(i+1).padStart(2,'0')+' · '+t.name+'</button>').join('');
+$('styles').addEventListener('click',e=>{const b=e.target.closest('[data-i]');if(!b)return;chosen=Number(b.dataset.i);document.querySelectorAll('.style').forEach(x=>x.classList.toggle('active',x===b));draw()});
+const clamp=(n,a,b)=>Math.max(a,Math.min(b,n));
+function roundedRect(ctx,x,y,w,h,r){ctx.beginPath();ctx.roundRect(x,y,w,h,r)}
+function draw(){
+ const c=$('canvas'),ctx=c.getContext('2d'),t=themes[chosen],fontBase=Number($('size').value),alpha=Number($('opacity').value)/100;
+ ctx.clearRect(0,0,c.width,c.height);
+ const lines=[$('headline').value.trim(),$('second').value.trim()].filter(Boolean);
+ if(!lines.length){$('status').textContent='Pehle headline likho.';return}
+ if($('gradient').value==='yes'){const g=ctx.createLinearGradient(0,550,0,1350);g.addColorStop(0,'rgba(0,0,0,0)');g.addColorStop(.55,'rgba(0,0,0,.32)');g.addColorStop(1,'rgba(0,0,0,.92)');ctx.fillStyle=g;ctx.fillRect(0,550,1080,800)}
+ const padX=34,padY=22,gap=13,boxMax=990;let font=fontBase;
+ ctx.textAlign='center';ctx.textBaseline='middle';
+ function measure(size){ctx.font='900 '+size+'px "Noto Sans Devanagari", Inter, sans-serif';return lines.map(s=>ctx.measureText(s).width)}
+ let widths=measure(font);while(Math.max.apply(null,widths)>boxMax-2*padX&&font>24){font--;widths=measure(font)}
+ const lineH=Math.round(font*1.45),boxH=lineH+padY*2,total=lines.length*boxH+(lines.length-1)*gap;
+ let startY;
+ const pos=$('position').value;
+ if(pos==='top')startY=90;else if(pos==='center')startY=(1350-total)/2;else if(pos==='lower')startY=790-total;else startY=1230-total;
+ startY=clamp(startY,30,1350-total-25);
+ lines.forEach((line,i)=>{
+  const y=startY+i*(boxH+gap),w=clamp(Math.max(widths[i]+padX*2,Math.min(720,widths[i]+90)),Math.min(400,boxMax),boxMax),x=(1080-w)/2;
+  const hi=$('highlight').value,highlight=(hi==='both'||(hi==='first'&&i===0)||(hi==='second'&&i===1));
+  ctx.save();
+  if(t.type==='rgb'||t.type==='neon'||t.type==='mix'||t.type==='haze'){ctx.shadowColor=t.a;ctx.shadowBlur=25}
+  let fill;
+  if(t.type==='white'||t.type==='clean'||t.type==='paper')fill='rgba(250,250,250,'+alpha+')';
+  else if(t.type==='black')fill='rgba(5,5,8,'+alpha+')';
+  else if(t.type==='glass')fill='rgba(30,5,15,'+alpha*.88+')';
+  else if(t.type==='tricolor'){const gr=ctx.createLinearGradient(x,y,x+w,y+boxH);gr.addColorStop(0,'rgba(255,153,51,'+alpha+')');gr.addColorStop(.5,'rgba(255,255,255,'+alpha+')');gr.addColorStop(1,'rgba(19,136,8,'+alpha+')');fill=gr}
+  else if(t.type==='flash'&&highlight)fill='rgba(220,38,38,'+alpha+')';
+  else {const gr=ctx.createLinearGradient(x,y,x+w,y+boxH);gr.addColorStop(0,t.a);gr.addColorStop(1,t.b);fill=gr}
+  ctx.fillStyle=fill;
+  if(t.type==='paper')ctx.strokeStyle='rgba(80,55,25,.65)';
+  if(t.type==='paper')ctx.lineWidth=3;
+  roundedRect(ctx,x,y,w,boxH,t.type==='breaking'||t.type==='flash'?2:10);ctx.fill();if(t.type==='paper')ctx.stroke();
+  if(t.type==='mix'){ctx.fillStyle='rgba(0,229,255,.22)';ctx.fillRect(x,y,w*.12,boxH);ctx.fillStyle='rgba(255,45,149,.22)';ctx.fillRect(x+w*.88,y,w*.12,boxH)}
+  if(highlight&&t.type!=='white'&&t.type!=='clean'&&t.type!=='paper'&&t.type!=='black'){ctx.fillStyle='rgba(255,255,255,.12)';ctx.fillRect(x,y,w,5)}
+  let color=(t.type==='white'||t.type==='clean'||t.type==='paper'||t.type==='tricolor')?'#171720':'#ffffff';
+  if(t.type==='lime'||t.type==='yellow'||t.type==='gold')color='#111116';
+  ctx.textAlign=$('alignment').value;ctx.font='900 '+font+'px "Noto Sans Devanagari", Inter, sans-serif';ctx.textBaseline='middle';
+  let tx=540;if($('alignment').value==='left')tx=x+padX;if($('alignment').value==='right')tx=x+w-padX;
+  ctx.shadowBlur=(t.type==='rgb'||t.type==='neon'||t.type==='haze')?9:0;ctx.shadowColor=t.a;ctx.fillStyle=color;
+  ctx.fillText(line,tx,y+boxH/2,w-2*padX);
+  if(t.type==='breaking'||t.type==='flash'){ctx.fillStyle=t.type==='flash'?'#111':'#ffd54a';ctx.fillRect(x,y,w,6)}
+  if(t.type==='gold'){ctx.strokeStyle='rgba(255,226,145,.8)';ctx.lineWidth=2;roundedRect(ctx,x+3,y+3,w-6,boxH-6,7);ctx.stroke()}
+  ctx.restore();
+ });
+ $('status').textContent=themes[chosen].name+' · '+lines.length+' line(s) · 1080×1350 transparent PNG';
+}
+['headline','second','size','position','alignment','highlight','opacity','gradient'].forEach(id=>$(id).addEventListener('input',draw));
+$('download').addEventListener('click',()=>{draw();$('canvas').toBlob(blob=>{if(!blob){$('status').textContent='PNG export failed. Try again.';return}const url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='headline-'+themes[chosen].name.toLowerCase().replace(/[^a-z0-9]+/g,'-')+'.png';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1500);$('status').textContent='PNG downloaded — background transparent hai.'},'image/png')});
+$('reset').addEventListener('click',()=>{$('headline').value='';$('second').value='';$('size').value='42';$('position').value='bottom';$('alignment').value='center';$('highlight').value='first';$('opacity').value='96';$('gradient').value='yes';chosen=0;document.querySelectorAll('.style').forEach((x,i)=>x.classList.toggle('active',i===0));draw()});
+if(document.fonts&&document.fonts.ready)document.fonts.ready.then(draw);draw();
+})();
 </script></body></html>
