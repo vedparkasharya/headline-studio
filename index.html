@@ -82,17 +82,18 @@ function draw(){
  const lines=[$('headline').value.trim(),$('second').value.trim()].filter(Boolean);
  if(!lines.length){$('status').textContent='Pehle headline likho.';return}
  if($('gradient').value==='yes'){const g=ctx.createLinearGradient(0,550,0,1350);g.addColorStop(0,'rgba(0,0,0,0)');g.addColorStop(.55,'rgba(0,0,0,.32)');g.addColorStop(1,'rgba(0,0,0,.92)');ctx.fillStyle=g;ctx.fillRect(0,550,1080,800)}
- const padX=34,padY=22,gap=13,boxMax=990;let font=fontBase;
+ const isRedGlow=themes[chosen].type==='redglow';
+ const padX=34,padY=isRedGlow?10:22,gap=isRedGlow?12:13,boxMax=990;let font=isRedGlow?Math.min(fontBase,36):fontBase;
  ctx.textAlign='center';ctx.textBaseline='middle';
  function measure(size){ctx.font='900 '+size+'px "Noto Sans Devanagari", Inter, sans-serif';return lines.map(s=>ctx.measureText(s).width)}
  let widths=measure(font);while(Math.max.apply(null,widths)>boxMax-2*padX&&font>24){font--;widths=measure(font)}
- const lineH=Math.round(font*1.45),boxH=lineH+padY*2,total=lines.length*boxH+(lines.length-1)*gap;
+ const lineH=Math.round(font*(isRedGlow?1.38:1.45)),boxH=lineH+padY*2,total=lines.length*boxH+(lines.length-1)*gap;
  let startY;
  const pos=$('position').value;
  if(pos==='top')startY=90;else if(pos==='center')startY=(1350-total)/2;else if(pos==='lower')startY=790-total;else startY=1230-total;
  startY=clamp(startY,30,1350-total-25);
  lines.forEach((line,i)=>{
-  const y=startY+i*(boxH+gap),w=clamp(Math.max(widths[i]+padX*2,Math.min(720,widths[i]+90)),Math.min(400,boxMax),boxMax),x=(1080-w)/2;
+  const y=startY+i*(boxH+gap),w=isRedGlow?970:clamp(Math.max(widths[i]+padX*2,Math.min(720,widths[i]+90)),Math.min(400,boxMax),boxMax),x=(1080-w)/2;
   const hi=$('highlight').value,highlight=(hi==='both'||(hi==='first'&&i===0)||(hi==='second'&&i===1));
   ctx.save();
   const typ=t.type;
