@@ -116,12 +116,12 @@ function draw(){
     ctx.font='900 '+redFont+'px "Noto Sans Devanagari", Inter, sans-serif';
     const lineHeight=redFont*1.35;
     const blockHeight=lines.length*lineHeight+(lines.length-1)*14;
-    let baseY=1288-blockHeight/2;
-    if($('position').value==='top')baseY=110+blockHeight/2;
-    else if($('position').value==='center')baseY=675;
-    else if($('position').value==='lower')baseY=980;
+    let blockTop=1305-blockHeight;
+    if($('position').value==='top')blockTop=105;
+    else if($('position').value==='center')blockTop=675-blockHeight/2;
+    else if($('position').value==='lower')blockTop=1080-blockHeight/2;
     lines.forEach((line,i)=>{
-      const yy=baseY-blockHeight/2+lineHeight/2+i*(lineHeight+14);
+      const yy=blockTop+lineHeight/2+i*(lineHeight+14);
       ctx.save();ctx.shadowColor='rgba(255,20,45,.82)';ctx.shadowBlur=22;
       ctx.fillStyle='#ff263f';ctx.fillText(line,tx,yy,930);ctx.restore();
     });
